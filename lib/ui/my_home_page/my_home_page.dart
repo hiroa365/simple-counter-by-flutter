@@ -4,7 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'my_home_page_view_model .dart';
 
 class MyHomePage extends ConsumerWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({
+    Key? key,
+    required this.title,
+    required this.onSelectedArticle,
+  }) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -16,10 +20,11 @@ class MyHomePage extends ConsumerWidget {
   // always marked "final".
 
   final String title;
+  final ValueChanged<String> onSelectedArticle;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _viewModel = ref.watch(myHomePageViewModelProvider);
+    final viewModel = ref.watch(myHomePageViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,14 +56,17 @@ class MyHomePage extends ConsumerWidget {
               'You have pushed the button this many times:',
             ),
             Text(
-              '${_viewModel.getCounter()}',
-              style: Theme.of(context).textTheme.headline4,
+              '${viewModel.getCounter()}',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
+            OutlinedButton(
+                onPressed: () => onSelectedArticle('/'),
+                child: const Text('next page')),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _viewModel.incrementCounter,
+        onPressed: viewModel.incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
