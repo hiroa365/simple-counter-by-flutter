@@ -28,6 +28,9 @@ class SecondPage extends ConsumerWidget {
             OutlinedButton(
                 onPressed: () => navigateTo('/'),
                 child: const Text('top page')),
+            OutlinedButton(
+                onPressed: () => viewModel.onClickReadMSButton(),
+                child: const Text('read MS')),
           ],
         ),
       ),
