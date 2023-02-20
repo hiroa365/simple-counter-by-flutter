@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'app_router_delegate.dart';
+import 'ui/navigator/app_router_delegate.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       home: Router(routerDelegate: AppRouterDelegate()),
-
     );
   }
 }

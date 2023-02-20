@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simplecounterbyflutter/model/counter.dart';
 
 final myHomeRepositoryProvider =
-    Provider((ref) => MyHomeRepositoryImpl(counter: ref.read(counterProvider)));
+    Provider.autoDispose((ref) => MyHomeRepositoryImpl(counter: ref.read(counterProvider)));
 
 abstract class MyHomeRepository {
   Future<Counter> incrementCounter();

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simplecounterbyflutter/repository/MyHomeRepository.dart';
 
-final myHomePageViewModelProvider = ChangeNotifierProvider((ref) =>
+final myHomePageViewModelProvider = ChangeNotifierProvider.autoDispose((ref) =>
     MyHomePageViewModel(repository: ref.read(myHomeRepositoryProvider)));
 
 class MyHomePageViewModel extends ChangeNotifier {

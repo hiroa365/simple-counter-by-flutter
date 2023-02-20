@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'my_home_page_view_model .dart';
+import 'my_home_page_view_model.dart';
 
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({
-    Key? key,
+    super.key,
     required this.title,
-    required this.onSelectedArticle,
-  }) : super(key: key);
+    required this.navigateTo,
+  });
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -20,7 +20,7 @@ class MyHomePage extends ConsumerWidget {
   // always marked "final".
 
   final String title;
-  final ValueChanged<String> onSelectedArticle;
+  final ValueChanged<String> navigateTo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,6 +31,7 @@ class MyHomePage extends ConsumerWidget {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(title),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -60,7 +61,7 @@ class MyHomePage extends ConsumerWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             OutlinedButton(
-                onPressed: () => onSelectedArticle('/'),
+                onPressed: () => navigateTo('/2'),
                 child: const Text('next page')),
           ],
         ),
