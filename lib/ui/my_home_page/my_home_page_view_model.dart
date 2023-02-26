@@ -1,25 +1,21 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:simplecounterbyflutter/repository/MyHomeRepository.dart';
 
-final myHomePageViewModelProvider = ChangeNotifierProvider.autoDispose((ref) =>
-    MyHomePageViewModel(repository: ref.read(myHomeRepositoryProvider)));
 
-class MyHomePageViewModel extends ChangeNotifier {
-  MyHomePageViewModel({required repository}) : _repository = repository;
+@immutable
+class MyHomePageState {
+  const MyHomePageState({required this.counter});
 
-  int _counter = 0;
+  final int counter;
 
-  final MyHomeRepository _repository;
-
-  int getCounter() {
-    return _counter;
+  MyHomePageState copyWith({int? counter}) {
+    return MyHomePageState(counter: counter ?? this.counter);
   }
+}
 
-  void incrementCounter() {
-    _repository.incrementCounter().then((counter) {
-      _counter = counter.counter;
-      notifyListeners();
-    });
-  }
+class MyHomePageNotifier extends StateNotifier<MyHomePageState> {
+  MyHomePageNotifier() : super(const MyHomePageState(counter: 0));
+
+  // void increment() => state = MyHomePageState(counter: state.counter + 1);
+  void increment() => state = state.copyWith(counter: state.counter + 1);
 }

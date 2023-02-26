@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:simplecounterbyflutter/ui/socind_page/second_page_view_model.dart';
+
+import 'package:simplecounterbyflutter/di/view_model_providers.dart';
 
 class SecondPage extends ConsumerWidget {
   const SecondPage({
     super.key,
-    required this.title,
-    required this.navigateTo,
-  }) ;
+    required title,
+    required navigateTo,
+  })  : _title = title,
+        _navigateTo = navigateTo;
 
-  final String title;
-  final ValueChanged<String> navigateTo;
+  final String _title;
+  final ValueChanged<String> _navigateTo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(secondPageViewModelProvider);
+    final state = ref.watch(secondPageNotifierProvider);
+    final notifier = ref.read(secondPageNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(_title),
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -26,10 +29,10 @@ class SecondPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             OutlinedButton(
-                onPressed: () => navigateTo('/'),
+                onPressed: () => _navigateTo('/'),
                 child: const Text('top page')),
             OutlinedButton(
-                onPressed: () => viewModel.onClickReadMSButton(),
+                onPressed: () => notifier.onClickReadMSButton(),
                 child: const Text('read MS')),
           ],
         ),

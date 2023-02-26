@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'my_home_page_view_model.dart';
+import 'package:simplecounterbyflutter/di/view_model_providers.dart';
 
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({
     super.key,
-    required this.title,
-    required this.navigateTo,
-  });
+    required title,
+    required navigateTo,
+  })  : _title = title,
+        _navigateTo = navigateTo;
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -19,18 +20,19 @@ class MyHomePage extends ConsumerWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
-  final ValueChanged<String> navigateTo;
+  final String _title;
+  final ValueChanged<String> _navigateTo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(myHomePageViewModelProvider);
+    final state = ref.watch(myHomePageNotifierProvider);
+    final notifier = ref.read(myHomePageNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(title),
+        title: Text(_title),
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -57,17 +59,17 @@ class MyHomePage extends ConsumerWidget {
               'You have pushed the button this many times:',
             ),
             Text(
-              '${viewModel.getCounter()}',
+              state.counter.toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             OutlinedButton(
-                onPressed: () => navigateTo('/2'),
+                onPressed: () => _navigateTo('/2'),
                 child: const Text('next page')),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: viewModel.incrementCounter,
+        onPressed: () => notifier.increment(),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
