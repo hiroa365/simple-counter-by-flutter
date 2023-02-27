@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:simplecounterbyflutter/di/view_model_providers.dart';
+import 'my_home_page_provider.dart';
 
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({
     super.key,
     required title,
-    required navigateTo,
+    required navigateToNext,
   })  : _title = title,
-        _navigateTo = navigateTo;
+        _navigateToNext = navigateToNext;
+
+  static const route = '/';
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -21,12 +23,12 @@ class MyHomePage extends ConsumerWidget {
   // always marked "final".
 
   final String _title;
-  final ValueChanged<String> _navigateTo;
+  final Function _navigateToNext;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(myHomePageNotifierProvider);
-    final notifier = ref.read(myHomePageNotifierProvider.notifier);
+    final notifier = ref.watch(myHomePageNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -63,7 +65,7 @@ class MyHomePage extends ConsumerWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             OutlinedButton(
-                onPressed: () => _navigateTo('/2'),
+                onPressed: () => _navigateToNext(),
                 child: const Text('next page')),
           ],
         ),

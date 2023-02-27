@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:simplecounterbyflutter/di/view_model_providers.dart';
+import 'second_page_provider.dart';
+
 
 class SecondPage extends ConsumerWidget {
   const SecondPage({
     super.key,
     required title,
-    required navigateTo,
+    required navigateToTop,
   })  : _title = title,
-        _navigateTo = navigateTo;
+        _navigateToTop = navigateToTop;
+
+  static const route = '/2';
 
   final String _title;
-  final ValueChanged<String> _navigateTo;
+  final Function _navigateToTop;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(secondPageNotifierProvider);
-    final notifier = ref.read(secondPageNotifierProvider.notifier);
+    final notifier = ref.watch(secondPageNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +32,7 @@ class SecondPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             OutlinedButton(
-                onPressed: () => _navigateTo('/'),
+                onPressed: () => _navigateToTop(),
                 child: const Text('top page')),
             OutlinedButton(
                 onPressed: () => notifier.onClickReadMSButton(),

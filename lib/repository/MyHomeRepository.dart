@@ -1,16 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simplecounterbyflutter/model/counter.dart';
 
-final myHomeRepositoryProvider =
-    Provider.autoDispose((ref) => MyHomeRepositoryImpl(counter: ref.read(counterProvider)));
+final myHomeRepositoryProvider = Provider.autoDispose((ref) {
+  return MyHomeRepositoryImpl(ref.read);
+});
 
 abstract class MyHomeRepository {
   Future<Counter> incrementCounter();
 }
 
 class MyHomeRepositoryImpl implements MyHomeRepository {
-  MyHomeRepositoryImpl({required Counter counter}) : _counter = counter;
+  MyHomeRepositoryImpl(this._read) : _counter = _read(counterProvider);
 
+  final Reader _read;
   final Counter _counter;
 
   @override

@@ -20,18 +20,18 @@ class AppRouterDelegate extends RouterDelegate<void>
         const MaterialPage(
           child: RootPage(),
         ),
-        if (id == '/')
+        if (id == MyHomePage.route)
           MaterialPage(
             child: MyHomePage(
               title: 'Flutter Demo Home Page',
-              navigateTo: _handleNavigateTo,
+              navigateToNext: () => _handleNavigateTo(SecondPage.route),
             ),
           ),
-        if (id == '/2')
+        if (id == SecondPage.route)
           MaterialPage(
             child: SecondPage(
               title: 'Flutter Demo Second Page',
-              navigateTo: _handleNavigateTo,
+              navigateToTop: () => _handleNavigateTo(MyHomePage.route),
             ),
           ),
       ],
